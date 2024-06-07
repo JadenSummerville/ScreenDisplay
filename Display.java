@@ -16,11 +16,17 @@ public class Display {
      * @param Jlabels return parameter. Keys are strings in 'imageFilePaths'.
      * Values are their corresponding JLabels
      * @param imageFilePaths the paths to the pngs we wish to display.
+     * @param dimensions arraylist of dimensions of each imageFile path
+     * ordered width, height, x, y.
      * @throws RuntimeException Jlabels is not empty.
+     * @throws RuntimeException dimensions is not the same length as imageFilePaths.
     */
-    public Display(HashMap<String, JLabel> Jlabels, String... imageFilePaths) {
+    public Display(HashMap<String, JLabel> Jlabels, ArrayList<String> imageFilePaths, ArrayList<ArrayList<Integer>> dimensions) {
         if (Jlabels.size() != 0) {
             throw new RuntimeException("Return parameter not empty.");
+        }
+        if (imageFilePaths.size() != dimensions.size()) {
+            throw new RuntimeException("Dimensions not specified or extra dimensions specified.");
         }
         frame = new JFrame();
         keyBoard = new KeyBoard();
@@ -34,14 +40,22 @@ public class Display {
         contentPane = new JPanel(null);
         contentPane.setOpaque(false);
         //1
-        for (int i = 0; i != imageFilePaths.length; i++) {
-            Jlabels.put(imageFilePaths[i], addImage(imageFilePaths[i], 1500, 900, 0, 0));
+        for (int i = 0; i != imageFilePaths.size(); i++) {
+            Jlabels.put(imageFilePaths.get(i), addImage(imageFilePaths.get(i),
+            dimensions.get(i).get(0), dimensions.get(i).get(1), dimensions.get(i).get(2), dimensions.get(i).get(3)));
         }
         //1
         System.out.println(contentPane.getComponentCount());
         frame.setContentPane(contentPane);
 
         frame.setVisible(true);
+    }
+    public static <T> ArrayList<T> toArray(T... objects) {
+        ArrayList<T> goal = new ArrayList<>();
+        for (T obj: objects) {
+            goal.add(obj);
+        }
+        return goal;
     }
     private JLabel addImage(String filepath, int width, int height, int x, int y) {
         ImageIcon icon = new ImageIcon(filepath);
@@ -61,5 +75,6 @@ public class Display {
     */
     public void setZOrder(JLabel jlabel, int index) {
         contentPane.setComponentZOrder(jlabel, index);
+        contentPane.repaint();
     }
 }
