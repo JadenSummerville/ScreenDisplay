@@ -4,11 +4,11 @@ import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-class Display {
+public class Display {
     private final JFrame frame;
     public final KeyBoard keyBoard;
     private final JPanel contentPane;
-    Display(HashMap<String, JLabel> Jlabels, String... imageFilePaths) {
+    public Display(HashMap<String, JLabel> Jlabels, String... imageFilePaths) {
         if (Jlabels.size() != 0) {
             throw new RuntimeException("Return parameter not empty.");
         }
