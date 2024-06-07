@@ -9,6 +9,9 @@ class Display {
     public final KeyBoard keyBoard;
     private final JPanel contentPane;
     Display(HashMap<String, JLabel> Jlabels, String... imageFilePaths) {
+        if (Jlabels.size() != 0) {
+            throw new RuntimeException("Return parameter not empty.");
+        }
         frame = new JFrame();
         keyBoard = new KeyBoard();
         //
