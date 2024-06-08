@@ -1,36 +1,18 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Display {
     private final JFrame frame;
     public final KeyBoard keyBoard;
     private final JPanel contentPane;
     /**
-     * Creates a display screen with the png in the paths imageFilePaths.
-     * Uses Jlabels as a return parameter where each image file path
-     * leads to that path's corresponding JLabel.
-     * 
-     * @param Jlabels return parameter. Keys are strings in 'imageFilePaths'.
-     * Values are their corresponding JLabels
-     * @param imageFilePaths the paths to the pngs we wish to display.
-     * @param dimensions arraylist of dimensions of each imageFile path
-     * ordered width, height, x, y.
-     * @throws RuntimeException Jlabels is not empty.
-     * @throws RuntimeException dimensions is not the same length as imageFilePaths.
+     * Creates a display screen.
+     * Still needs to be started.
     */
-    public Display(HashMap<String, JLabel> Jlabels, ArrayList<String> imageFilePaths, ArrayList<ArrayList<Integer>> dimensions) {
-        if (Jlabels.size() != 0) {
-            throw new RuntimeException("Return parameter not empty.");
-        }
-        if (imageFilePaths.size() != dimensions.size()) {
-            throw new RuntimeException("Dimensions not specified or extra dimensions specified.");
-        }
+    public Display() {
         frame = new JFrame();
         keyBoard = new KeyBoard();
-        //
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setUndecorated(true);
         frame.addKeyListener(keyBoard);
@@ -39,16 +21,6 @@ public class Display {
         
         contentPane = new JPanel(null);
         contentPane.setOpaque(false);
-        //1
-        for (int i = 0; i != imageFilePaths.size(); i++) {
-            Jlabels.put(imageFilePaths.get(i), addImage(imageFilePaths.get(i),
-            dimensions.get(i).get(0), dimensions.get(i).get(1), dimensions.get(i).get(2), dimensions.get(i).get(3)));
-        }
-        //1
-        System.out.println(contentPane.getComponentCount());
-        frame.setContentPane(contentPane);
-
-        frame.setVisible(true);
     }
     public static <T> ArrayList<T> toArray(T... objects) {
         ArrayList<T> goal = new ArrayList<>();
@@ -57,7 +29,17 @@ public class Display {
         }
         return goal;
     }
-    private JLabel addImage(String filepath, int width, int height, int x, int y) {
+    /**
+     * Adds image with given filepath.
+     * 
+     * @param filepath path to png we will use.
+     * @param width desired scaled width of image.
+     * @param height desired scaled height of image.
+     * @param x start x.
+     * @param x start y.
+     * @param Jlabel JLabel of image.
+    */
+    public JLabel addImage(String filepath, int width, int height, int x, int y) {
         ImageIcon icon = new ImageIcon(filepath);
         JLabel imageLabel = new JLabel();
         Image image = icon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
@@ -66,6 +48,15 @@ public class Display {
         imageLabel.setBounds(x, y, width, height);
         contentPane.add(imageLabel);
         return imageLabel;
+    }
+    /**
+     * Starts the Jframe.
+     * It is recommended to addImage before
+     * but not after this method is run.
+    */
+    public void start() {
+        frame.setContentPane(contentPane);
+        frame.setVisible(true);
     }
     /**
      * Set z ordering of this JLabel.
