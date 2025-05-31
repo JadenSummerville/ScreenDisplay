@@ -11,7 +11,7 @@ public class KeyBoardTest {
             System.out.print("");
         }
         for(long i = 0; i != 1000_000_000_000_000_000L; i++);
-        List<Character> list = display.keyBoard.getList();
+        List<Integer> list = display.keyBoard.getList();
         display.end();
         for(Character event: list)
         {

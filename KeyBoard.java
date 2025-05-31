@@ -1,12 +1,10 @@
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class KeyBoard implements KeyListener{
-    private Set<Character> keysBeingPressed = new HashSet<>();
+    private Set<Integer> keysBeingPressed = new HashSet<>();
     private KeyEvent lastKeyPressed = null;
 
     @Override
@@ -14,13 +12,13 @@ public class KeyBoard implements KeyListener{
     @Override
     public void keyPressed(KeyEvent e)
     {
-        keysBeingPressed.add(e.getKeyChar());
+        keysBeingPressed.add(e.getKeyCode());
         lastKeyPressed = e;
     }
     @Override
     public void keyReleased(KeyEvent e)
     {
-        keysBeingPressed.remove(e);
+        keysBeingPressed.remove(e.getKeyCode());
     }
 
     public boolean anyPressed()
@@ -40,11 +38,11 @@ public class KeyBoard implements KeyListener{
 
     public boolean isPressed(KeyEvent e)
     {
-        return keysBeingPressed.contains(e);
+        return isPressed(e.getKeyCode());
     }
 
-    public List<Character> getList()
+    public boolean isPressed(Integer e)
     {
-        return new ArrayList<Character>(keysBeingPressed);
+        return keysBeingPressed.contains(e);
     }
 }
