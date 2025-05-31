@@ -1,5 +1,6 @@
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -39,5 +40,10 @@ public class KeyBoard implements KeyListener{
     public boolean isPressed(KeyEvent e)
     {
         return keysBeingPressed.contains(e);
+    }
+
+    public Iterable<KeyEvent> iterator()
+    {
+        return new ArrayList<>(keysBeingPressed);
     }
 }
