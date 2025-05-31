@@ -1,13 +1,13 @@
-import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import javax.swing.*;
 
 public class Display {
     private final JFrame frame;
     public final KeyBoard keyBoard;
     private final JPanel contentPane;
     /**
-     * Creates a display screen.
+     * Creates a display screen with full-screen.
      * Still needs to be started.
     */
     public Display() {
@@ -21,6 +21,23 @@ public class Display {
         
         contentPane = new JPanel(null);
         contentPane.setOpaque(false);
+    }
+    /**
+     * Creates a display screen with screen of dimensions 'width' 'height'.
+     * Still needs to be started.
+     * @param width width of the pane
+     * @param height height of the pane
+    */
+    public Display(int width, int height) {
+        frame = new JFrame();
+        keyBoard = new KeyBoard();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(width, height);
+        frame.setLocationRelativeTo(null);
+        frame.addKeyListener(keyBoard);
+        contentPane = new JPanel(null);
+        contentPane.setOpaque(false);
+        frame.setVisible(true);
     }
     public static <T> ArrayList<T> toArray(T... objects) {
         ArrayList<T> goal = new ArrayList<>();
@@ -57,6 +74,12 @@ public class Display {
     public void start() {
         frame.setContentPane(contentPane);
         frame.setVisible(true);
+    }
+    /**
+     * Ends the Jframe.
+    */
+    public void end() {
+        frame.dispose();
     }
     /**
      * Set z ordering of this JLabel.
